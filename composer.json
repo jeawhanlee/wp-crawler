@@ -1,0 +1,21 @@
+{
+  "name": "wp-crawler/wp-crawler",
+  "description": "A Wordpress plulgin for crawling and extracting links of homepage",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Michael",
+      "email": "michaelleemichaellee408@gmail.com",
+      "homepage": "https://wordpress.org"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "WP_Crawler\\": "inc/"
+    }
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": "^2.3",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2"
+  }
+}
