@@ -14,8 +14,15 @@
       "WP_Crawler\\": "inc/"
     }
   },
+  "config": {
+    "platform-check": false
+  },
   "require-dev": {
+    "php": ">=8.0.0",
     "wp-coding-standards/wpcs": "^2.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2"
+  },
+  "require": {
+    "fabpot/goutte": "^4.0"
   }
 }

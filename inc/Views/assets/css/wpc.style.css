@@ -1,0 +1,19 @@
+#wpc_app .nav-pills .nav-link {
+  text-align: left;
+  color: #1d2327ff;
+}
+
+#wpc_app .nav-pills {
+  width: 100%;
+  height: 50vh;
+  background-color: #f8f8f8;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #1d2327ff;
+  color: white !important;
+}
+
+.alert-secondary {
+  background-color: #f6f6f6;
+}
