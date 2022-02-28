@@ -15,7 +15,7 @@ define( 'WPC_APP_PATH', plugin_dir_path( __FILE__ ) );
 /**
  * define WP API Namespace
  */
-define ( 'API_NAMESPACE', 'wpcrawler/v1' );
+define( 'API_NAMESPACE', 'wpcrawler/v1' );
 
 /**
  * Site to crawl

@@ -4,123 +4,130 @@ namespace WP_Crawler\Rest;
 
 class Crawl extends \WP_Crawler\Model\Options {
 
-    /**
-     * hold crawl data
-     *
-     * @var array
-     */
-    private $crawl_data = array();
 
-    /**
-     * crawler client
-     *
-     * @var [type]
-     */
-    private $client = '';
+	/**
+	 * hold crawl data
+	 *
+	 * @var array
+	 */
+	private $crawl_data = array();
 
-    /**
-     * Hold response
-     *
-     * @var array
-     */
-    private $response = array();
+	/**
+	 * crawler client
+	 *
+	 * @var [type]
+	 */
+	private $client = '';
 
-    public function __construct($client) {
+	/**
+	 * Hold response
+	 *
+	 * @var array
+	 */
+	private $response = array();
 
-        /**
-         * Goutte Crawler
-         *
-         * @return void
-         */
-        $this->client = $client;
-    }
+	public function __construct( $client ) {
 
-    /**
-     * Return crawl results
-     *
-     * @return void
-     */
-    public function get_crawl_result(){
+		/**
+		 * Goutte Crawler
+		 *
+		 * @return void
+		 */
+		$this->client = $client;
+	}
 
-        $this->response = array(
-            'result' => $this->option( 'wpc_crawl_result' )->read(),
-            'last_crawl' => $this->option( 'wpc_crawl_time' )->read(),
-            'base' => 'http://' . CRAWL_SITE
-        );
+	/**
+	 * Return crawl results
+	 *
+	 * @return void
+	 */
+	public function get_crawl_result() {
 
-        return $this->response;
+		$this->response = array(
+			'result'     => $this->option( 'wpc_crawl_result' )->read(),
+			'last_crawl' => $this->option( 'wpc_crawl_time' )->read(),
+			'base'       => 'http://' . CRAWL_SITE,
+		);
 
-    }
+		return $this->response;
 
-    public function crawl(){
+	}
 
-        try{
-            /**
-             * Set method and url to crawl
-             */
-            $crawler = $this->client->request( 'GET', 'http://' . CRAWL_SITE );
+	public function crawl() {
 
-            /**
-             * Crawl and filter anchor tags
-             */
-            $crawler->filter( 'a' )->each(
-                function ( $node ) {
-                    $this->crawl_data[] = [
-                        'link' => $node->attr( 'href' ),
-                        'text' => $node->text(),
-                    ];
-                }
-            );
+		try {
+			/**
+			 * Set method and url to crawl
+			 */
+			$crawler = $this->client->request( 'GET', 'http://' . CRAWL_SITE );
 
-             /**
-             * Save crawl result
-             */
-            $this->option( 'wpc_crawl_result' )->value( $this->crawl_data )->save();
-            $this->option( 'wpc_crawl_time' )->value( date( 'Y-m-d H:i' ) )->save();
+			/**
+			 * Crawl and filter anchor tags
+			 */
+			$crawler->filter( 'a' )->each(
+				function ( $node ) {
+					$this->crawl_data[] = array(
+						'link' => $node->attr( 'href' ),
+						'text' => $node->text(),
+					);
+				}
+			);
 
-            /**
-             * Set API Response
-             */
-            $this->response = array(
-                'message' => 'Crawled Successfully'
-            );
-        }
-        catch(Exception $e){
+			 /**
+			 * Save crawl result
+			 */
+			$this->option( 'wpc_crawl_result' )->value( $this->crawl_data )->save();
+			$this->option( 'wpc_crawl_time' )->value( date( 'Y-m-d H:i' ) )->save();
 
-            /**
-             * Set API Response
-             */
-            $this->response = array(
-                'message' => 'Cannot crawl page at the moment, check your internet connection and try again'
-            );
-        }
-        
+			/**
+			 * Set API Response
+			 */
+			$this->response = array(
+				'message' => 'Crawled Successfully',
+			);
+		} catch ( Exception $e ) {
 
-        /**
-         * Return response
-         */
-        return $this->response;
-    }
+			/**
+			 * Set API Response
+			 */
+			$this->response = array(
+				'message' => 'Cannot crawl page at the moment, check your internet connection and try again',
+			);
+		}
 
-    /**
-     * Register API Routes
-     *
-     * @return void
-     */
-    public function register_routes(){
+		/**
+		 * Return response
+		 */
+		return $this->response;
+	}
 
-        register_rest_route( API_NAMESPACE, '/crawl', array(
-        'methods' => 'GET',
-        'callback' => [$this, 'crawl'],
-        ) );
+	/**
+	 * Register API Routes
+	 *
+	 * @return void
+	 */
+	public function register_routes() {
 
-        /**
-         * route to return crawl result
-         */
-        register_rest_route( API_NAMESPACE, '/get_crawl_result', array(
-        'methods' => 'GET',
-        'callback' => [$this, 'get_crawl_result'],
-        ) );
-    }
+		register_rest_route(
+			API_NAMESPACE,
+			'/crawl',
+			array(
+				'methods'  => 'GET',
+				'callback' => array( $this, 'crawl' ),
+			)
+		);
+
+		/**
+		 * route to return crawl result
+		 */
+		register_rest_route(
+			API_NAMESPACE,
+			'/get_crawl_result',
+			array(
+				'methods'  => 'GET',
+				'callback' => array( $this, 'get_crawl_result' ),
+			)
+		);
+	}
 
 }
