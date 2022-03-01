@@ -13,7 +13,7 @@ let crawl = new Vue({
         base: "",
       },
       loading: true,
-      feed: "",
+      feed: null,
     };
   },
 
@@ -23,6 +23,7 @@ let crawl = new Vue({
 
   methods: {
     fetchCrawlResults() {
+      this.feed = "";
       axios
         .get(config.base_url + "get_crawl_result")
         .then((res) => {
@@ -45,8 +46,8 @@ let crawl = new Vue({
         .get(config.base_url + "crawl")
         .then((res) => {
           if (res.status === 200) {
-            this.feed = res.data.message;
             this.fetchCrawlResults();
+            this.feed = res.data.message;
           }
         })
         .catch((error) => {
