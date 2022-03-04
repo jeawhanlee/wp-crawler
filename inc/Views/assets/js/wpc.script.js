@@ -32,8 +32,7 @@ let crawl = new Vue({
             this.crawl.last_crawl = res.data.last_crawl;
             this.crawl.base = res.data.base;
           }
-
-          //   remove notice after 3 seconds
+          // remove notice after 3 seconds
           if (this.feed) {
             setTimeout(() => {
               this.feed = null;

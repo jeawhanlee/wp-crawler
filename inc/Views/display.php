@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <div id="wpc_app">
-    <div class="notice notice-success is-dismissible mt-3" v-if="feed">{{ feed }}</div>
+	<div class="notice notice-success is-dismissible mt-3" v-if="feed">{{ feed }}</div>
 	<div class="container mt-4">
 		<h3>WP Crawler</h3>
 		<div class="alert alert-secondary border-0 py-4" role="alert">
