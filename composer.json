@@ -14,9 +14,6 @@
       "WP_Crawler\\": "inc/"
     }
   },
-  "config": {
-    "platform-check": false
-  },
   "require-dev": {
     "php": ">=8.0.0",
     "wp-coding-standards/wpcs": "^2.3",
