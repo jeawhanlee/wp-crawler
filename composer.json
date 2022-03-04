@@ -23,6 +23,6 @@
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2"
   },
   "require": {
-    "fabpot/goutte": "^4.0"
+    "simplehtmldom/simplehtmldom": "dev-master"
   }
 }
