@@ -23,7 +23,6 @@ let crawl = new Vue({
 
   methods: {
     fetchCrawlResults() {
-      this.feed = "";
       axios
         .get(config.base_url + "get_crawl_result")
         .then((res) => {
@@ -32,6 +31,13 @@ let crawl = new Vue({
             this.crawl.result = res.data.result;
             this.crawl.last_crawl = res.data.last_crawl;
             this.crawl.base = res.data.base;
+          }
+
+          //   remove notice after 3 seconds
+          if (this.feed) {
+            setTimeout(() => {
+              this.feed = null;
+            }, 3000);
           }
         })
         .catch((error) => {

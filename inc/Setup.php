@@ -64,7 +64,7 @@ class Setup {
 		/**
 		 * require view display
 		 */
-		include_once WPC_APP_PATH . 'views/display.php';
+		include_once WPC_APP_PATH . 'Views/display.php';
 
 	}
 
@@ -79,5 +79,16 @@ class Setup {
 		 * add plugin menu
 		 */
 		add_action( 'admin_menu', array( $this, 'create_menu' ) );
+
+        /**
+         * Set cron to crawl
+         */
+        //verify event has not been scheduled
+        if ( !wp_next_scheduled( 'wpc_page_crawl' ) ) {
+        
+            //schedule the event to run hourly
+            wp_schedule_event( time(), 'hourly', 'wpc_page_crawl' );
+            
+        }
 	}
 }

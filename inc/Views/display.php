@@ -1,5 +1,7 @@
 <?php
+
 defined( 'ABSPATH' ) || exit;
+
 ?>
 
 <div id="wpc_app">

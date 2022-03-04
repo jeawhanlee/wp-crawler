@@ -1,5 +1,4 @@
 <?php
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -20,6 +19,6 @@ define( 'API_NAMESPACE', 'wpcrawler/v1' );
 /**
  * Site to crawl
  */
-define( 'CRAWL_SITE', 'wp-media.me' );
+define( 'CRAWL_SITE', home_url() );
 
 
