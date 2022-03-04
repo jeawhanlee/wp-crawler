@@ -14,18 +14,49 @@ defined( 'ABSPATH' ) || exit;
 
 ob_start();
 
-use Goutte\Client;
+use simplehtmldom\HtmlDocument;
 
+/**
+ * include wp file system class
+ */
+require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
+require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+
+/**
+ * Composer autoload
+ */
 require __DIR__ . '/vendor/autoload.php';
+
+/**
+ * Plugin config constants
+ */
 require __DIR__ . '/inc/constants.php';
 
-$goutte = new Client();
+/**
+ * instatiate simple html dom class; object
+ */
+$html = new HtmlDocument();
+
+/**
+ * instatiate wp_filesystem class; object
+ */
+$wp_filesystem = new WP_Filesystem_Direct( null );
 
 /**
  * initialize WP REST API
  */
-add_action( 'rest_api_init', array( new WP_Crawler\Rest\Crawl( $goutte ), 'register_routes' ) );
+$crawl = new WP_Crawler\Rest\Crawl( $html, $wp_filesystem );
 
+add_action( 'rest_api_init', array( $crawl, 'register_routes' ) );
+
+/**
+ * Cron to crawl
+ */
+add_action('wpc_page_crawl', array( $crawl, 'crawl' ) );
+
+/**
+ * Assets (Styles & Scripts) for plugin
+ */
 $assets = array(
 	/**
 	 * Register Bootstrap CSS
