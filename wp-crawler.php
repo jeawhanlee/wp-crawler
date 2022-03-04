@@ -52,7 +52,7 @@ add_action( 'rest_api_init', array( $crawl, 'register_routes' ) );
 /**
  * Cron to crawl
  */
-add_action('wpc_page_crawl', array( $crawl, 'crawl' ) );
+add_action( 'wpc_page_crawl', array( $crawl, 'crawl' ) );
 
 /**
  * Assets (Styles & Scripts) for plugin
