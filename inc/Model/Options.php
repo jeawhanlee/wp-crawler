@@ -10,14 +10,14 @@ class Options {
 	 *
 	 * @var string
 	 */
-	protected $option = '';
+	public $option = '';
 
 	/**
 	 * Set option value
 	 *
 	 * @var [type]
 	 */
-	protected $value;
+	public $value;
 
 	/**
 	 * Set option name
@@ -25,14 +25,14 @@ class Options {
 	 * @param  string $option
 	 * @return void
 	 */
-	protected function option( string $option ) {
+	public function option( string $option ) {
 
 		$this->option = $option;
 		return $this;
 
 	}
 
-	protected function value( mixed $value ) {
+	public function value( $value ) {
 
 		if ( $this->option == '' ) {
 			return;
@@ -47,7 +47,7 @@ class Options {
 	 *
 	 * @return void
 	 */
-	protected function save() {
+	public function save() {
 
 		if ( $this->option == '' && empty( $this->value ) ) {
 			return;
@@ -57,7 +57,7 @@ class Options {
 
 	}
 
-	protected function read() {
+	public function read() {
 
 		if ( $this->option == '' ) {
 			return;
