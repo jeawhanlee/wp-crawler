@@ -20,13 +20,6 @@ class Crawl extends \WP_Crawler\Model\Options {
 	private $html;
 
 	/**
-	 * wp_file system
-	 *
-	 * @var [type]
-	 */
-	private $wp_files;
-
-	/**
 	 * sitemap html
 	 *
 	 * @var string
@@ -40,17 +33,17 @@ class Crawl extends \WP_Crawler\Model\Options {
 	 */
 	private $response = array();
 
-	public function __construct( $html, $wp_files ) {
+	public function __construct( $html ) {
 
 		/**
 		 * simple html dom parser
 		 */
 		$this->html = $html;
 
-		/**
-		 * Wp_file system
-		 */
-		$this->wp_files = $wp_files;
+        /**
+         * initialize the WP_filesystem
+         */
+        WP_Filesystem();
 	}
 
 	/**
@@ -151,10 +144,11 @@ class Crawl extends \WP_Crawler\Model\Options {
 	 * @return void
 	 */
 	public function create_file( string $file, string $file_content ) {
+        global $wp_filesystem;
 
 		$chmod = defined( 'FS_CHMOD_FILE' ) ? FS_CHMOD_FILE : 0644;
 
-		return $this->wp_files->put_contents( $file, $file_content, $chmod );
+		return $wp_filesystem->put_contents( $file, $file_content, $chmod );
 
 	}
 
@@ -165,8 +159,9 @@ class Crawl extends \WP_Crawler\Model\Options {
 	 * @return void
 	 */
 	public function read_file( string $file ) {
+        global $wp_filesystem;
 
-		return $this->wp_files->get_contents( $file );
+		return $wp_filesystem->get_contents( $file );
 
 	}
 
