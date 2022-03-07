@@ -19,7 +19,7 @@ use simplehtmldom\HtmlDocument;
 /**
  * include wp file system class
  */
-require_once ( ABSPATH . '/wp-admin/includes/file.php' );
+require_once ABSPATH . '/wp-admin/includes/file.php';
 
 /**
  * Composer autoload
@@ -39,7 +39,7 @@ $wpc_html = new HtmlDocument();
 /**
  * init options
  */
-$wpc_options = new WP_Crawler\Model\Options;
+$wpc_options = new WP_Crawler\Model\Options();
 
 /**
  * initialize WP REST API
