@@ -1,5 +1,9 @@
 const config = {
-  base_url: "http://" + window.location.hostname + "/wp-json/wpcrawler/v1/",
+  base_url:
+    window.location.protocol +
+    "//" +
+    window.location.hostname +
+    "/wp-json/wpcrawler/v1/",
 };
 
 let crawl = new Vue({
