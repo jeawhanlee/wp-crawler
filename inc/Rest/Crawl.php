@@ -26,12 +26,12 @@ class Crawl {
 	 */
 	private $sitemap_html = '';
 
-    /**
-     * Options object model
-     *
-     * @var [type]
-     */
-    private $options;
+	/**
+	 * Options object model
+	 *
+	 * @var [type]
+	 */
+	private $options;
 
 	/**
 	 * Hold response
@@ -47,15 +47,15 @@ class Crawl {
 		 */
 		$this->html = $html;
 
-        /**
-         * options object
-         */
-        $this->options = $options;
+		/**
+		 * options object
+		 */
+		$this->options = $options;
 
-        /**
-         * initialize the WP_filesystem
-         */
-        WP_Filesystem();
+		/**
+		 * initialize the WP_filesystem
+		 */
+		WP_Filesystem();
 	}
 
 	/**
@@ -156,7 +156,7 @@ class Crawl {
 	 * @return void
 	 */
 	public function create_file( string $file, string $file_content ) {
-        global $wp_filesystem;
+		global $wp_filesystem;
 
 		$chmod = defined( 'FS_CHMOD_FILE' ) ? FS_CHMOD_FILE : 0644;
 
@@ -171,7 +171,7 @@ class Crawl {
 	 * @return void
 	 */
 	public function read_file( string $file ) {
-        global $wp_filesystem;
+		global $wp_filesystem;
 
 		return $wp_filesystem->get_contents( $file );
 
