@@ -19,8 +19,7 @@ use simplehtmldom\HtmlDocument;
 /**
  * include wp file system class
  */
-require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
-require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+require_once ( ABSPATH . '/wp-admin/includes/file.php' );
 
 /**
  * Composer autoload
@@ -38,14 +37,9 @@ require __DIR__ . '/inc/constants.php';
 $html = new HtmlDocument();
 
 /**
- * instatiate wp_filesystem class; object
- */
-$wp_filesystem = new WP_Filesystem_Direct( null );
-
-/**
  * initialize WP REST API
  */
-$crawl = new WP_Crawler\Rest\Crawl( $html, $wp_filesystem );
+$crawl = new WP_Crawler\Rest\Crawl( $html );
 
 add_action( 'rest_api_init', array( $crawl, 'register_routes' ) );
 
@@ -66,7 +60,7 @@ $assets = array(
 	/**
 	 * Register local styling
 	 */
-	'wpc-style_style'      => plugins_url() . '/' . WPC_APP . '/inc/views/assets/css/wpc.style.css',
+	'wpc-style_style'      => plugins_url() . '/' . WPC_APP . '/inc/Views/assets/css/wpc.style.css',
 
 	/**
 	 * Register Vuejs
@@ -81,7 +75,7 @@ $assets = array(
 	/**
 	 * Register local scripting
 	 */
-	'wpc-script_script'    => plugins_url() . '/' . WPC_APP . '/inc/views/assets/js/wpc.script.js',
+	'wpc-script_script'    => plugins_url() . '/' . WPC_APP . '/inc/Views/assets/js/wpc.script.js',
 
 	/**
 	 * Register Bootstrap JS
