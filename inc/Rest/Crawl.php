@@ -2,7 +2,7 @@
 
 namespace WP_Crawler\Rest;
 
-class Crawl extends \WP_Crawler\Model\Options {
+class Crawl {
 
 
 	/**
@@ -26,6 +26,13 @@ class Crawl extends \WP_Crawler\Model\Options {
 	 */
 	private $sitemap_html = '';
 
+    /**
+     * Options object model
+     *
+     * @var [type]
+     */
+    private $options;
+
 	/**
 	 * Hold response
 	 *
@@ -33,12 +40,17 @@ class Crawl extends \WP_Crawler\Model\Options {
 	 */
 	private $response = array();
 
-	public function __construct( $html ) {
+	public function __construct( $html, $options ) {
 
 		/**
 		 * simple html dom parser
 		 */
 		$this->html = $html;
+
+        /**
+         * options object
+         */
+        $this->options = $options;
 
         /**
          * initialize the WP_filesystem
@@ -54,9 +66,9 @@ class Crawl extends \WP_Crawler\Model\Options {
 	public function get_crawl_result() {
 
 		$this->response = array(
-			'result'     => $this->option( 'wpc_crawl_result' )->read(),
-			'last_crawl' => $this->option( 'wpc_crawl_time' )->read(),
-			'base'       => 'http://' . CRAWL_SITE,
+			'result'     => $this->options->option( 'wpc_crawl_result' )->read(),
+			'last_crawl' => $this->options->option( 'wpc_crawl_time' )->read(),
+			'base'       => 'http://' . WPC_CRAWL_SITE,
 		);
 
 		return $this->response;
@@ -69,7 +81,7 @@ class Crawl extends \WP_Crawler\Model\Options {
 			/**
 			 * Set url content to crawl
 			 */
-			$response = wp_remote_get( CRAWL_SITE );
+			$response = wp_remote_get( WPC_CRAWL_SITE );
 
 			/**
 			 * filter anchor tags from html content
@@ -96,8 +108,8 @@ class Crawl extends \WP_Crawler\Model\Options {
 			 /**
 			 * Save crawl result
 			 */
-			$this->option( 'wpc_crawl_result' )->value( $this->crawl_data )->save();
-			$this->option( 'wpc_crawl_time' )->value( date( 'Y-m-d H:i' ) )->save();
+			$this->options->option( 'wpc_crawl_result' )->value( $this->crawl_data )->save();
+			$this->options->option( 'wpc_crawl_time' )->value( date( 'Y-m-d H:i' ) )->save();
 
 			/**
 			 * create homepage html
@@ -175,7 +187,7 @@ class Crawl extends \WP_Crawler\Model\Options {
 		 * route to crawl page
 		 */
 		register_rest_route(
-			API_NAMESPACE,
+			WPC_API_NAMESPACE,
 			'/crawl',
 			array(
 				'methods'  => 'GET',
@@ -187,7 +199,7 @@ class Crawl extends \WP_Crawler\Model\Options {
 		 * route to return crawl result
 		 */
 		register_rest_route(
-			API_NAMESPACE,
+			WPC_API_NAMESPACE,
 			'/get_crawl_result',
 			array(
 				'methods'  => 'GET',
